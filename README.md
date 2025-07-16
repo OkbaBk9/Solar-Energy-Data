@@ -29,12 +29,18 @@ Tech Stack
 - *(Optional)* Folium, Scikit-learn
 
 Project Structure :
+
 solar-sahara-project/
-├── data/ Raw & processed data
-├── notebooks/ Jupyter notebooks
-├── reports/ Graphs, summaries
-├── src/ Scripts
-├── README.md  Main documentation
+
+data/ Raw & processed data
+
+notebooks/ Jupyter notebooks
+
+reports/ Graphs, summaries
+
+src/ Scripts
+
+README.md  Main documentation
 
 
 Future Work
