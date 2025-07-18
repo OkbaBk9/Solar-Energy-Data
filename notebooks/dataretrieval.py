@@ -34,12 +34,13 @@ class NASAPowerSolarFetcher:
                 'ALLSKY_SRF_ALB',       # All Sky Surface Albedo
             ],
             'temperature': [
-                'T2M',                   # Temperature at 2 meters (°C)
-                'T2M_MAX',              # Maximum Temperature at 2 meters (°C)
-                'T2M_MIN',              # Minimum Temperature at 2 meters (°C)
-                'T2M_RANGE',            # Temperature Range at 2 meters (°C)
-                'T2MDEW',               # Dew Point Temperature at 2 meters (°C)
-                'T2MWET',               # Wet Bulb Temperature at 2 meters (°C)
+                'T2M',                   # Temperature at 2 meters 
+                'T2M_MAX',              # Maximum Temperature at 2 meters 
+                'T2M_MIN',              # Minimum Temperature at 2 meters 
+                'T2M_RANGE',            # Temperature Range at 2 meters 
+                'T2MDEW',               # Dew Point Temperature at 2 meters
+                'T2MWET',               # Wet Bulb Temperature at 2 meters 
+                # All in (Celsius)
             ],
             'wind': [
                 'WS2M',                 # Wind Speed at 2 meters (m/s)
@@ -59,7 +60,7 @@ class NASAPowerSolarFetcher:
                 'PRECTOTCORR_SUM',      # Precipitation Sum (mm)
             ],
             'solar_angles': [
-                'SZA',                  # Solar Zenith Angle (degrees)
+                'SZA',                       # Solar Zenith Angle (degrees)
                 'ALLSKY_SFC_SW_DWN_00_GMT',  # Solar radiation at specific times
                 'ALLSKY_SFC_SW_DWN_03_GMT',
                 'ALLSKY_SFC_SW_DWN_06_GMT',
@@ -72,9 +73,6 @@ class NASAPowerSolarFetcher:
         }
     
     def fetch_daily_nasa_improved(self, location, year, params=None, community="re", max_params_per_request=10):
-        """
-        Improved NASA POWER API fetcher with comprehensive parameter support
-        """
         if params is None:
             # Default comprehensive parameter set for solar analysis
             params = (self.parameter_groups['core_solar'] + 
@@ -181,9 +179,7 @@ class NASAPowerSolarFetcher:
         return None
     
     def try_multiple_approaches(self, location_name, year, param_groups=None):
-        """
-        Try different parameter combinations and communities to find working data
-        """
+      
         location = self.locations[location_name]
         
         if param_groups is None:
@@ -223,7 +219,7 @@ class NASAPowerSolarFetcher:
             }
         ]
         
-        print(f"\n=== Testing different approaches for {location_name} ({year}) ===")
+        print(f"\nTesting different approaches for {location_name} ({year}) ")
         
         for i, approach in enumerate(approaches, 1):
             print(f"\nApproach {i}: {approach['description']}")
@@ -244,7 +240,7 @@ class NASAPowerSolarFetcher:
                     if solar_param in df.columns:
                         valid_solar = df[solar_param].notna().sum()
                         if valid_solar > 0:
-                            print(f"SUCCESS! Found {valid_solar} valid solar irradiance values")
+                            print(f"sucess! Found {valid_solar} valid solar irradiance values")
                             return df, approach
                 
                 # If no solar data but we have temperature, it's partial success
@@ -259,9 +255,6 @@ class NASAPowerSolarFetcher:
         return None, None
     
     def create_sahara_solar_dataset(self, year=2020, dataset_type='comprehensive'):
-        """
-        Create a comprehensive solar dataset for all Algerian Sahara locations
-        """
         # Define parameter sets based on dataset type
         if dataset_type == 'basic':
             param_groups = ['core_solar', 'temperature']
@@ -307,14 +300,12 @@ class NASAPowerSolarFetcher:
                 else:
                     print(f"{location_name}: Data retrieval failed")
             
-            time.sleep(1)  # Respect API rate limits
+            time.sleep(1)  #  API rate limits
         
         return results, successful_approach
     
     def create_ml_ready_dataset(self, year=2020, include_derived_features=True):
-        """
-        Create a machine learning ready dataset with engineered features
-        """
+        
         # Get comprehensive data
         all_data, approach = self.create_sahara_solar_dataset(year, 'comprehensive')
         
@@ -406,7 +397,6 @@ class NASAPowerSolarFetcher:
         return df
     
     def save_to_csv(self, df, filename=None, location_name=None):
-        """Save DataFrame to CSV with proper formatting"""
         if filename is None:
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
             if location_name:
@@ -448,8 +438,7 @@ def main():
     ml_dataset = fetcher.create_ml_ready_dataset(year=2020, include_derived_features=True)
     
     if ml_dataset is not None:
-        # Save to okba.csv
-        print(f"\nSaving dataset to okba.csv...")
+        print(f"\nSaving..")
         fetcher.save_to_csv(ml_dataset, filename="okba.csv")
         
         # Display summary statistics
