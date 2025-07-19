@@ -11,10 +11,10 @@ Dataset
 - Features: Solar irradiance (DNI, DHI), temperature, clearness index, seasonal averages.
 
 Methodology
-1. Data Collection** via NASA POWER API.
-2. Preprocessing**: Feature engineering (clearness index, temp category).
+1. Data Collectio: via NASA POWER API.
+2. Preprocessing: Feature engineering (clearness index, temp category).
 3. Exploratory Analysis**: Trends across time, regions.
-4. Ranking**: Cities scored by solar viability.
+4. Ranking: Cities scored by solar viability.
 5. Regression models to predict solar output.
 
 Key Insights
@@ -26,7 +26,7 @@ Tech Stack
 - Python (pandas, numpy, matplotlib, seaborn)
 - Jupyter Notebooks
 - NASA POWER API
-- *(Optional)* Folium, Scikit-learn
+- Folium, Scikit-learn
 
 Project Structure :
 
